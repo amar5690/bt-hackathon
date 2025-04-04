@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1" author="amar" runOnChange="true">
+        <sql>
+            CREATE TABLE IF NOT EXISTS INVOICE
+            (
+                INVOICE_ID NUMERIC(20),
+                INVOICE_NUMBER VARCHAR(50) NOT NULL,
+                INVOICE_AMOUNT DECIMAL(18,9) NOT NULL,
+                INVOICE_DATE VARCHAR(50) NOT NULL,
+                INVOICE_DUE_DATE VARCHAR(50)NOT NULL,
+                PAYMENT_DATE VARCHAR(50),
+                STATUS VARCHAR(20),
+                SUPPLIER_ID NUMERIC(20),
+                CUSTOMER_ID NUMERIC(20),
+                PAYMENT_TERM NUMERIC(20),
+                DAYS_LATE NUMERIC(20),
+                CUSTOMER_AVG_DELAY NUMERIC(20),
+                DAYS_UNTIL_DUE NUMERIC(20),
+                DAY_BETWEEN_INVOICE_AND_PAYMENT NUMERIC(20),
+                CUSTOMER_ID_ENCODDED NUMERIC(20),
+                CREATED_DATE TIMESTAMPTZ NOT NULL,
+                MODBYID NUMERIC(20) NOT NULL DEFAULT 0,
+                MODTS TIMESTAMPTZ NOT NULL DEFAULT LOCALTIMESTAMP,
+                CONSTRAINT VENDOR_PAYER_GL_CONNECTIONS_PK PRIMARY KEY(INVOICE_ID)
+                );
+            COMMENT ON TABLE INVOICE IS 'This table stores information related to invoice lifeclycle.';
+
+            CREATE SEQUENCE IF NOT EXISTS INVOICE_SEQ INCREMENT 1 MINVALUE 1 NO MAXVALUE START 1
+            CACHE 20;
+        </sql>
+    </changeSet>
+</databaseChangeLog>
