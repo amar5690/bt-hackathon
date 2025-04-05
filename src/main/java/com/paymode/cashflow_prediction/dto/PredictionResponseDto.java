@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class PredictionResponseDto implements Serializable {
     private String status;
-    private float predictionDays;
+    private Integer predicted_days;
 
     public String getStatus() {
         return status;
@@ -16,19 +16,19 @@ public class PredictionResponseDto implements Serializable {
         this.status = status;
     }
 
-    public float getPredictionDays() {
-        return predictionDays;
+    public Integer getPredicted_days() {
+        return predicted_days;
     }
 
-    public void setPredictionDays(float predictionDays) {
-        this.predictionDays = predictionDays;
+    public void setPredicted_days(Integer predicted_days) {
+        this.predicted_days = predicted_days;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("status", status)
-                .append("predictionDays", predictionDays)
+                .append("predicted_days", predicted_days)
                 .toString();
     }
 }
