@@ -27,6 +27,7 @@
                 CREATED_DATE TIMESTAMPTZ NOT NULL,
                 MODBYID NUMERIC(20) NOT NULL DEFAULT 0,
                 MODTS TIMESTAMPTZ NOT NULL DEFAULT LOCALTIMESTAMP,
+                S3_PATH VARCHAR(100),
                 CONSTRAINT VENDOR_PAYER_GL_CONNECTIONS_PK PRIMARY KEY(INVOICE_ID)
                 );
             COMMENT ON TABLE INVOICE IS 'This table stores information related to invoice lifeclycle.';

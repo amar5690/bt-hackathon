@@ -27,6 +27,7 @@ public class InvoiceDto implements Serializable {
     private Long modifiedById;
     private LocalDateTime modifiedTimestamp;
     private PredictionResponseDto predictionResponseDto;
+    private String s3Path;
 
     public Long getInvoiceId() {
         return invoiceId;
@@ -178,5 +179,13 @@ public class InvoiceDto implements Serializable {
 
     public void setPredictionResponseDto(PredictionResponseDto predictionResponseDto) {
         this.predictionResponseDto = predictionResponseDto;
+    }
+
+    public String getS3Path() {
+        return s3Path;
+    }
+
+    public void setS3Path(String s3Path) {
+        this.s3Path = s3Path;
     }
 }

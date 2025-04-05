@@ -67,6 +67,9 @@ public class Invoice implements Serializable {
     @Column(name = "MODTS", nullable = false, columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT LOCALTIMESTAMP")
     private LocalDateTime modifiedTimestamp;
 
+    @Column(name = "S3_PATH", columnDefinition = "NUMERIC(20)")
+    private String s3Path;
+
     public Long getId() {
         return id;
     }
@@ -209,5 +212,13 @@ public class Invoice implements Serializable {
 
     public void setModifiedTimestamp(LocalDateTime modifiedTimestamp) {
         this.modifiedTimestamp = modifiedTimestamp;
+    }
+
+    public String getS3Path() {
+        return s3Path;
+    }
+
+    public void setS3Path(String s3Path) {
+        this.s3Path = s3Path;
     }
 }

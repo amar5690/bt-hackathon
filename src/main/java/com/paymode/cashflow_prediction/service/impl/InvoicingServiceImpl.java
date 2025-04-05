@@ -12,10 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static java.time.LocalDateTime.now;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -36,9 +39,18 @@ public class InvoicingServiceImpl implements InvoicingService {
 
     @Override
     public CreateInvoiceResponseDto createInvoice(final InvoiceDto invoiceDto,
-                                                  final Long vendorCompanyId) {
+                                                  final Long vendorCompanyId,
+                                                  final MultipartFile multipartFile) {
         final Invoice invoice = invoiceMapper.toInvoice(invoiceDto);
+        invoice.setCreatedDate(now());
+        invoice.setModifiedTimestamp(now());
+        invoice.setModifiedById(vendorCompanyId);
 
+        final String s3Path = invoicingHelper.uploadFile(multipartFile);
+        if (nonNull(s3Path)) {
+            invoice.setS3Path(s3Path);
+            invoice.setStatus("IN_PROGRESS");
+        }
         invoicingRepository.save(invoice);
         LOGGER.info("Invoice created: {}", invoice.getId());
 
@@ -77,5 +89,14 @@ public class InvoicingServiceImpl implements InvoicingService {
 
         LOGGER.info("Invoice not found for id {}", id);
         return new InvoiceDto();
+    }
+
+    public byte[] downloadFile(final long invoiceId) {
+        Optional<Invoice> invoiceOptional = invoicingRepository.findById(invoiceId);
+
+        if (invoiceOptional.isPresent() && nonNull(invoiceOptional.get().getS3Path())) {
+            return invoicingHelper.downloadFile(invoiceOptional.get().getS3Path());
+        }
+        return new byte[0];
     }
 }

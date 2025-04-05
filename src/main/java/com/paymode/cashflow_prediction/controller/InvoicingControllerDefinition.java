@@ -6,4 +6,5 @@ public class InvoicingControllerDefinition {
     public static final String INVOICING_RESOURCE_ROOT = INVOICING_RESOURCE;
     public static final String VENDOR_INVOICE_RESOURCE = "/vendors/{vendorCompanyId}/invoice";
     public static final String INVOICE_DETAILS_RESOURCE = "/invoices/{Id}";
+    public static final String DOWNLOAD_FILES_RESOURCE = "/downloads/files/{invoiceId}";
 }
