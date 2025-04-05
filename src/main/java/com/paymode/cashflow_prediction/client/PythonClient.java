@@ -37,13 +37,11 @@ public class PythonClient {
             HttpEntity<PredictionRequestDto> entity = new HttpEntity<>(predictionRequestDto, headers);
             LOGGER.info("Sending request to python service {} , body {}", getCashflowPredictionUrl, predictionRequestDto);
 
-            ResponseEntity<String> response = restTemplate.exchange(
-                    getCashflowPredictionUrl, POST, entity, String.class);
+            ResponseEntity<PredictionResponseDto> response = restTemplate.exchange(
+                    getCashflowPredictionUrl, POST, entity, PredictionResponseDto.class);
 
             LOGGER.info("getCashflowPrediction response: {} status {}", response.getBody(), response.getStatusCode());
-            final PredictionResponseDto predictionResponseDto = new PredictionResponseDto();
-            predictionResponseDto.setStatus(response.getBody());
-            return predictionResponseDto;
+            return response.getBody();
         } catch (Exception e) {
             LOGGER.error("failed to call cashflow prediction {}", e.getLocalizedMessage());
         }

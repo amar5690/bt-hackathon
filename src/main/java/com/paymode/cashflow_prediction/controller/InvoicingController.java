@@ -63,7 +63,7 @@ public class InvoicingController {
     }
 
     @PostMapping(value = VENDOR_INVOICE_FILE_UPLOAD_RESOURCE, consumes = MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> createInvoice(@RequestPart MultipartFile file,
+    public ResponseEntity<String> uploadInvoiceFile(@RequestPart MultipartFile file,
                                                 @PathVariable Long invoiceId) {
         return ResponseEntity.ok(invoicingService.uploadInvoiceFile(file,invoiceId));
     }
