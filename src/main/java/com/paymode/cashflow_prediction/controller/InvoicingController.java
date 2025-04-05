@@ -26,11 +26,10 @@ public class InvoicingController {
         this.invoicingService = invoicingService;
     }
 
-    @PostMapping(value = VENDOR_INVOICE_RESOURCE, consumes = MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<CreateInvoiceResponseDto> createInvoice(@RequestPart("invoiceDto") InvoiceDto invoiceDto,
-                                                                  @RequestPart MultipartFile file,
+    @PostMapping(value = VENDOR_INVOICE_RESOURCE, consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<CreateInvoiceResponseDto> createInvoice(@RequestBody InvoiceDto invoiceDto,
                                                                   @PathVariable Long vendorCompanyId) {
-        return ResponseEntity.ok(invoicingService.createInvoice(invoiceDto, vendorCompanyId,file));
+        return ResponseEntity.ok(invoicingService.createInvoice(invoiceDto, vendorCompanyId,null));
     }
 
     @GetMapping(value = VENDOR_INVOICE_RESOURCE)
