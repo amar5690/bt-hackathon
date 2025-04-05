@@ -2,7 +2,9 @@ package com.paymode.cashflow_prediction.dto;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class PredictionResponseDto {
+import java.io.Serializable;
+
+public class PredictionResponseDto implements Serializable {
     private String status;
     private float predictionDays;
 

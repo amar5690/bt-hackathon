@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Random;
 
 
 @Component
@@ -44,16 +43,16 @@ public class InvoicingHelper {
         return responseDto;
     }
 
-    public PredictionResponseDto getPaymentPredictionsForInvoices(final InvoiceDto invoice) {
-        return pythonClient.getCashflowPrediction(buildPredictionRequestDto(invoice));
+    public PredictionResponseDto getPaymentPredictionsForInvoices(final InvoiceDto invoice,String customerIdForPrediction) {
+        return pythonClient.getCashflowPrediction(buildPredictionRequestDto(invoice,customerIdForPrediction));
     }
 
-    private PredictionRequestDto buildPredictionRequestDto(final InvoiceDto invoice) {
+    private PredictionRequestDto buildPredictionRequestDto(final InvoiceDto invoice, String customerIdForPrediction) {
         final PredictionRequestDto requestDto = new PredictionRequestDto();
         requestDto.setInvoiceDate(invoice.getInvoiceDate());
         requestDto.setInvoiceDueDate(invoice.getInvoiceDueDate());
         requestDto.setInvoiceAmount(invoice.getInvoiceAmount());
-        requestDto.setInvoiceAmount(invoice.getInvoiceAmount());
+        requestDto.setCustomerIdForPrediction(customerIdForPrediction);
         return requestDto;
     }
 

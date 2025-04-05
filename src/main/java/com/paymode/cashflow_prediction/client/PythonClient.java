@@ -7,9 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Collections;
 
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -29,15 +32,18 @@ public class PythonClient {
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
             HttpEntity<PredictionRequestDto> entity = new HttpEntity<>(predictionRequestDto, headers);
             LOGGER.info("Sending request to python service {} , body {}", getCashflowPredictionUrl, predictionRequestDto);
 
-            ResponseEntity<PredictionResponseDto> response = restTemplate.exchange(
-                    getCashflowPredictionUrl, POST, entity, PredictionResponseDto.class);
+            ResponseEntity<String> response = restTemplate.exchange(
+                    getCashflowPredictionUrl, POST, entity, String.class);
 
             LOGGER.info("getCashflowPrediction response: {} status {}", response.getBody(), response.getStatusCode());
-            return response.getBody();
+            final PredictionResponseDto predictionResponseDto = new PredictionResponseDto();
+            predictionResponseDto.setStatus(response.getBody());
+            return predictionResponseDto;
         } catch (Exception e) {
             LOGGER.error("failed to call cashflow prediction {}", e.getLocalizedMessage());
         }

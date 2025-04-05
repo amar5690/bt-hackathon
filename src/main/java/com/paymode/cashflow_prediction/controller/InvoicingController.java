@@ -1,6 +1,8 @@
 package com.paymode.cashflow_prediction.controller;
 
 import com.paymode.cashflow_prediction.dto.CreateInvoiceResponseDto;
+import com.paymode.cashflow_prediction.dto.CustomerDto;
+import com.paymode.cashflow_prediction.dto.EmailDto;
 import com.paymode.cashflow_prediction.dto.InvoiceDto;
 import com.paymode.cashflow_prediction.service.InvoicingService;
 import org.springframework.http.MediaType;
@@ -47,5 +49,23 @@ public class InvoicingController {
     public ResponseEntity<byte[]> downloadFile(@PathVariable Long invoiceId)  {
 
         return ResponseEntity.ok(invoicingService.downloadFile(invoiceId));
+    }
+
+    @GetMapping(value = VENDOR_CUSTOMER_LIST)
+    public ResponseEntity<List<CustomerDto>> getCustomerList(@PathVariable Long supplierId) {
+
+        return ResponseEntity.ok(invoicingService.getCustomerList(supplierId));
+    }
+
+    @PostMapping(value = TRIGGER_EMAIL_NOTIFICATION, consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> triggerEmail(@RequestBody EmailDto emailDto) {
+
+        return ResponseEntity.ok(invoicingService.triggerEmail(emailDto));
+    }
+
+    @PostMapping(value = VENDOR_INVOICE_FILE_UPLOAD_RESOURCE, consumes = MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> createInvoice(@RequestPart MultipartFile file,
+                                                @PathVariable Long invoiceId) {
+        return ResponseEntity.ok(invoicingService.uploadInvoiceFile(file,invoiceId));
     }
 }

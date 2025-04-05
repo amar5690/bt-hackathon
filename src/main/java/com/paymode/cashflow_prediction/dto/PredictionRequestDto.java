@@ -9,6 +9,7 @@ public class PredictionRequestDto {
     private BigDecimal invoiceAmount;
     private String invoiceDate;
     private String invoiceDueDate;
+    private String customerIdForPrediction;
 
     public Integer getCustomerId() {
         return customerId;
@@ -42,6 +43,14 @@ public class PredictionRequestDto {
         this.invoiceDueDate = invoiceDueDate;
     }
 
+    public String getCustomerIdForPrediction() {
+        return customerIdForPrediction;
+    }
+
+    public void setCustomerIdForPrediction(String customerIdForPrediction) {
+        this.customerIdForPrediction = customerIdForPrediction;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this)
@@ -49,6 +58,7 @@ public class PredictionRequestDto {
                 .append("invoiceAmount", invoiceAmount)
                 .append("invoiceDate", invoiceDate)
                 .append("invoiceDueDate", invoiceDueDate)
+                .append("customerIdForPrediction", customerIdForPrediction)
                 .toString();
     }
 }

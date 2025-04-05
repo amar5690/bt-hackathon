@@ -36,4 +36,50 @@
             CACHE 20;
         </sql>
     </changeSet>
+    <changeSet id="2" author="amar" runOnChange="true">
+        <sql>
+            CREATE TABLE IF NOT EXISTS CUSTOMER
+            (
+            CUSTOMER_ID NUMERIC(20),
+            FIRST_NAME VARCHAR(50) NOT NULL,
+            LAST_NAME VARCHAR(50) NOT NULL,
+            EMAIL_ID VARCHAR(100) NOT NULL,
+            SUPPLIER_ID NUMERIC(20) NOT NULL,
+            CUSTOMER_ID_FOR_PREDICTION VARCHAR( 20) NOT NULL,
+            CREATED_DATE TIMESTAMPTZ NOT NULL DEFAULT LOCALTIMESTAMP,
+            MODIFIED_DATE TIMESTAMPTZ NOT NULL DEFAULT LOCALTIMESTAMP,
+            CONSTRAINT CUSTOMER_PK PRIMARY KEY(CUSTOMER_ID)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="3" author="amar" runOnChange="true">
+        <sql>
+            CREATE TABLE IF NOT EXISTS SUPPLIER
+            (
+            SUPPLIER_ID NUMERIC(20),
+            FIRST_NAME VARCHAR(50),
+            LAST_NAME VARCHAR(50),
+            EMAIL_ID VARCHAR(100),
+            CREATED_DATE TIMESTAMPTZ NOT NULL DEFAULT LOCALTIMESTAMP,
+            MODIFIED_DATE TIMESTAMPTZ NOT NULL DEFAULT LOCALTIMESTAMP,
+            CONSTRAINT SUPPLIER_PK PRIMARY KEY(SUPPLIER_ID)
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="4" author="amar" runOnChange="true">
+        <sql>
+
+            INSERT INTO public.supplier(
+                supplier_id, first_name, last_name, email_id, created_date, modified_date)
+            VALUES
+                (5001, 'Michael', 'Roberts', 'barsheena.gulzar@bottomline.com', '2025-04-05 14:30:00+00', '2025-04-05 14:30:00+00');
+
+            INSERT INTO public.customer(
+                customer_id, first_name, last_name, email_id, supplier_id, created_date, modified_date, customer_id_for_prediction)
+            VALUES
+                (6001, 'John', 'Doe', 'amar.gope@bottomline.com', 5001, '2025-04-05 14:30:00+00', '2025-04-05 14:30:00+00', 'CUST03'),
+                (6002, 'Jane', 'Smith', 'sushmita.mehta@bottomline.com', 5001, '2025-04-05 15:00:00+00', '2025-04-05 15:00:00+00', 'CUST12'),
+                (6003, 'Emily', 'Johnson', 'juhi.williams@bottomline.com', 5001, '2025-04-05 15:30:00+00', '2025-04-05 15:30:00+00', 'CUST95');
+        </sql>
+    </changeSet>
 </databaseChangeLog>
