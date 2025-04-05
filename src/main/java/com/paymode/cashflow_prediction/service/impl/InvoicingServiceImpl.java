@@ -65,7 +65,6 @@ public class InvoicingServiceImpl implements InvoicingService {
         invoice.setModifiedById(vendorCompanyId);
         invoice.setStatus("IN_PROGRESS");
 
-
         invoicingRepository.save(invoice);
         LOGGER.info("Invoice created: {}", invoice.getId());
 
@@ -178,6 +177,7 @@ public class InvoicingServiceImpl implements InvoicingService {
             final String s3Path = invoicingHelper.uploadFile(file);
             if (nonNull(s3Path)) {
                 invoice.setS3Path(s3Path);
+                invoicingRepository.save(invoice);
             }
             return s3Path;
         }
